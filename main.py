@@ -35,7 +35,6 @@ if __name__ == "__main__":
             try:
                 response_data = check_airdrop(wallet, proxies[i] if i < len(proxies) else None)
 
-                # Обработка response_data
                 polygon_zkevm_data = response_data.get("Polygon zkEVM", {})
                 lumoz_data = response_data.get("Lumoz", {})
                 zkrollups_data = response_data.get("zkRollups", {})
