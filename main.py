@@ -1,5 +1,6 @@
 import csv
 import requests
+import random
 from time import sleep
 
 def check_airdrop(_wallet: str, proxy: str = None):
@@ -33,7 +34,11 @@ if __name__ == "__main__":
 
         for i, wallet in enumerate(wallets):
             try:
-                response_data = check_airdrop(wallet, proxies[i] if i < len(proxies) else None)
+                selected_proxy = random.choice(proxies) if proxies else None
+
+                print(f"Selected Proxy: {selected_proxy}")
+
+                response_data = check_airdrop(wallet, selected_proxy)
 
                 polygon_zkevm_data = response_data.get("Polygon zkEVM", {})
                 lumoz_data = response_data.get("Lumoz", {})
@@ -48,7 +53,7 @@ if __name__ == "__main__":
                 }
 
                 writer.writerow(data)
-                print(f"Wallet: {wallet}, Data: {data}")
+                print(f"Wallet: {wallet}, Proxy: {selected_proxy}, Data: {data}")
             except Exception as e:
                 print(f'Failed to check wallet {wallet}, reason: {e}')
             finally:
